@@ -21,7 +21,8 @@ class HelloController extends AbstractController // The AbstractController helps
         return $this->render(
             'hello/index.html.twig',
             [
-                'messages' => array_slice($this->messages, 0, $limit)
+                'messages' => $this->messages,
+                'limit' =>  $limit
             ]
         );
     }
