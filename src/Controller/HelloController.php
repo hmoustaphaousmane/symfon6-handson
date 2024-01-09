@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class HelloController extends AbstractController // The AbstractController helps to generate based on a Twig template this why we do the extend
 {
     private array $messages = [
-        'Hello', 'Hi', 'Bye!'
+        ['message' => 'Hello', 'created' => '2024/01/12'],
+        ['message' => 'Hi', 'created' => '2023/11/12'],
+        ['message' => 'Bye!', 'created' => '2022/12/20']
     ];
 
     #[Route('/{limit<\d+>?3}', name: 'app_index')] // Always give a `name` to the routes
