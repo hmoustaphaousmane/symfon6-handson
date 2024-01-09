@@ -25,3 +25,5 @@
 ###< symfony/asset-mapper ###
 
 notes.txt
+.env
+.env.test
