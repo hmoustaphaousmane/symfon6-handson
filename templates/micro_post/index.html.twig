@@ -10,10 +10,12 @@
         <a href="{{ path('app_micro_post_show', { post: post.id}) }}">
             {{ post.title }}
         </a>
-    </div
+    </div>
     {% endfor %}
 {% else %}
     There's nothing here yet!
 {% endif %}
 </div>
+
+<div><a href="{{ path('app_micro_post_add') }}">New Post</a>
 {% endblock %}
