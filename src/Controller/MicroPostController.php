@@ -37,7 +37,7 @@ class MicroPostController extends AbstractController
         $form = $this->createFormBuilder($micropost)
             ->add('title')
             ->add('text')
-            ->add('submit', SubmitType::class, ['label' => 'Save'])
+            // ->add('submit', SubmitType::class, ['label' => 'Save'])
             ->getForm(); // Retrieve the form
         
         $form->handleRequest($request);
