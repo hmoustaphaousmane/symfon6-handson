@@ -52,6 +52,12 @@ class MicroPostController extends AbstractController
             $entityManager->persist(($micropost));
             // Actually executes the queries (i.e the INSERT query)
             $entityManager->flush();
+
+            // Add success flash message
+            $this->addFlash('success', 'Your micro post have been successfule added.');
+
+            // Redirect
+            return $this->redirectToRoute('app_micro_post');
         }
         
         // Otherwise render the form view
