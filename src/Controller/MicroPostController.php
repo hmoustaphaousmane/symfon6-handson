@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\MicroPost;
 use App\Repository\MicroPostRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,8 @@ class MicroPostController extends AbstractController
     }
 
     #[Route('micro-post/add', name: 'app_micro_post_add', priority: 2)]
-    public function add(Request $request, EntityManagerInterface $entityManager) : Response {
+    public function add(Request $request, EntityManagerInterface $entityManager) : Response
+    {
         $micropost = new MicroPost();
         // Create a form using form builder and configure it to handle the properties of the MicroPost entity (`title` and `text`)
         $form = $this->createFormBuilder($micropost)
@@ -54,7 +56,7 @@ class MicroPostController extends AbstractController
             $entityManager->flush();
 
             // Add success flash message
-            $this->addFlash('success', 'Your micro post have been successfule added.');
+            $this->addFlash('success', 'Your micro post has been successfully added.');
 
             // Redirect
             return $this->redirectToRoute('app_micro_post');
@@ -63,6 +65,31 @@ class MicroPostController extends AbstractController
         // Otherwise render the form view
         return $this->render('micro_post/add.html.twig', [
             'form' => $form
+        ]);
+    }
+
+    #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
+    public function edit(MicroPost $post, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createFormBuilder($post)
+            ->add('title')
+            ->add('text')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = $form->getData();
+            $entityManager->flush();
+
+            // Add success flash message
+            $this->addFlash('success', 'Your micro post has been successfully updated.');
+            
+            return $this->redirectToRoute('app_micro_post'); // Redirect to posts index page
+        }
+
+        return $this->render('micro_post/edit.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
