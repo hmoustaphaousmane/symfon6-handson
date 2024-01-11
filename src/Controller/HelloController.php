@@ -3,9 +3,14 @@
 namespace  App\Controller; // Every controller should have a name space that
 // starts with `App\`
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Entity\UserProfile;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserProfileRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 // The class name and the file name should be the same and there should be no
 // more than one class per file
@@ -17,14 +22,23 @@ class HelloController extends AbstractController // The AbstractController helps
         ['message' => 'Bye!', 'created' => '2022/12/20']
     ];
 
-    #[Route('/{limit<\d+>?3}', name: 'app_index')] // Always give a `name` to the routes
-    public function index(int $limit): Response
+    #[Route('/', name: 'app_index')] // Always give a `name` to the routes
+    public function index(Request $request, EntityManagerInterface $entitymanger): Response
     {
+        $user = new User();
+        $user->setEmail('hello@mail.com');
+        $user->setPassword('qwert123');
+
+        $profile = new UserProfile();
+        $profile->setUser($user);
+        $entitymanger->persist($profile);
+        $entitymanger->flush();
+
         return $this->render(
             'hello/index.html.twig',
             [
                 'messages' => $this->messages,
-                'limit' =>  $limit
+                'limit' =>  3
             ]
         );
     }
