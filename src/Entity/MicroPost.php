@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MicroPostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,6 +29,14 @@ class MicroPost
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private \DateTimeInterface $created;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
+    private Collection $ccomments;
+
+    public function __construct()
+    {
+        $this->ccomments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -65,6 +75,36 @@ class MicroPost
     public function setCreated(\DateTimeInterface $created): static
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getCcomments(): Collection
+    {
+        return $this->ccomments;
+    }
+
+    public function addCcomment(Comment $ccomment): static
+    {
+        if (!$this->ccomments->contains($ccomment)) {
+            $this->ccomments->add($ccomment);
+            $ccomment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCcomment(Comment $ccomment): static
+    {
+        if ($this->ccomments->removeElement($ccomment)) {
+            // set the owning side to null (unless already changed)
+            if ($ccomment->getPost() === $this) {
+                $ccomment->setPost(null);
+            }
+        }
 
         return $this;
     }

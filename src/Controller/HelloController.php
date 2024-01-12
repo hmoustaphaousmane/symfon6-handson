@@ -25,14 +25,14 @@ class HelloController extends AbstractController // The AbstractController helps
     #[Route('/', name: 'app_index')] // Always give a `name` to the routes
     public function index(Request $request, EntityManagerInterface $entitymanger): Response
     {
-        $user = new User();
-        $user->setEmail('hello@mail.com');
-        $user->setPassword('qwert123');
+        // $user = new User();
+        // $user->setEmail('hello@mail.com');
+        // $user->setPassword('qwert123');
 
-        $profile = new UserProfile();
-        $profile->setUser($user);
-        $entitymanger->persist($profile);
-        $entitymanger->flush();
+        // $profile = new UserProfile();
+        // $profile->setUser($user);
+        // $entitymanger->persist($profile);
+        // $entitymanger->flush();
 
         return $this->render(
             'hello/index.html.twig',
