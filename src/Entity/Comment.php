@@ -11,14 +11,14 @@ class Comment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 500)]
-    private ?string $text = null;
+    private string $text;
 
     #[ORM\ManyToOne(inversedBy: 'ccomments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?MicroPost $post = null;
+    private MicroPost $post;
 
     public function getId(): ?int
     {

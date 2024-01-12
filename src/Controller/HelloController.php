@@ -3,8 +3,12 @@
 namespace  App\Controller; // Every controller should have a name space that
 // starts with `App\`
 
+use App\Entity\Comment;
+use DateTime;
 use App\Entity\User;
+use App\Entity\MicroPost;
 use App\Entity\UserProfile;
+use App\Repository\MicroPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +27,7 @@ class HelloController extends AbstractController // The AbstractController helps
     ];
 
     #[Route('/', name: 'app_index')] // Always give a `name` to the routes
-    public function index(Request $request, EntityManagerInterface $entitymanger): Response
+    public function index(EntityManagerInterface $entitymanger, MicroPostRepository $postRepository): Response
     {
         // $user = new User();
         // $user->setEmail('hello@mail.com');
@@ -33,6 +37,26 @@ class HelloController extends AbstractController // The AbstractController helps
         // $profile->setUser($user);
         // $entitymanger->persist($profile);
         // $entitymanger->flush();
+
+        // $post = new MicroPost();
+        // $post->setTitle('Hello');
+        // $post->setText('Hello');
+        // $post->setCreated(new DateTime());
+        $post = $postRepository
+            ->find(5)
+        ;
+
+        $comment = new Comment();
+        // $comment->setId();
+        $comment->setText('This is a comment.');
+
+        // Relate this comment to the post
+        $comment->setPost($post);
+        
+        // dd($post);
+        // $entitymanger->persist($post);
+        $entitymanger->persist($comment);
+        $entitymanger->flush();
 
         return $this->render(
             'hello/index.html.twig',
