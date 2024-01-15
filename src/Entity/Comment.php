@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -14,6 +15,8 @@ class Comment
     private int $id;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 5, max:255)]
     private string $text;
 
     #[ORM\ManyToOne(inversedBy: 'ccomments')]

@@ -42,21 +42,21 @@ class HelloController extends AbstractController // The AbstractController helps
         // $post->setTitle('Hello');
         // $post->setText('Hello');
         // $post->setCreated(new DateTime());
-        $post = $postRepository
-            ->find(5)
-        ;
+        // $post = $postRepository
+        //     ->find(5)
+        // ;
 
-        $comment = new Comment();
+        // $comment = new Comment();
         // $comment->setId();
-        $comment->setText('This is a comment.');
+        // $comment->setText('This is a comment.');
 
         // Relate this comment to the post
-        $comment->setPost($post);
+        // $comment->setPost($post);
         
         // dd($post);
         // $entitymanger->persist($post);
-        $entitymanger->persist($comment);
-        $entitymanger->flush();
+        // $entitymanger->persist($comment);
+        // $entitymanger->flush();
 
         return $this->render(
             'hello/index.html.twig',
