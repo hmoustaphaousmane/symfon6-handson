@@ -45,6 +45,7 @@ class AppFixtures extends Fixture
         $microPost1->setTitle('Welcome to Poland!');
         $microPost1->setText('Welcome to Poland!');
         $microPost1->setCreated(new DateTime());
+        $microPost1->setAuthor($user1);
         // Signal to the ORM to store the created object as a record inside the database table
         $manager->persist($microPost1); 
 
@@ -52,12 +53,14 @@ class AppFixtures extends Fixture
         $microPost2->setTitle('Welcome to US!');
         $microPost2->setText('Welcome to US!');
         $microPost2->setCreated(new DateTime());
+        $microPost2->setAuthor($user2);
         $manager->persist($microPost2);
 
         $microPost3 = new MicroPost();
         $microPost3->setTitle('Welcome to Germany!');
         $microPost3->setText('Welcome to Germany!');
         $microPost3->setCreated(new DateTime());
+        $microPost3->setAuthor($user1);
         $manager->persist($microPost3);
 
         $manager->flush(); // The method `flush()` runs the SQL queries

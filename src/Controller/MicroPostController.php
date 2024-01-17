@@ -7,7 +7,6 @@ use App\Entity\Comment;
 use App\Entity\MicroPost;
 use App\Form\CommentType;
 use App\Form\MicroPostType;
-use Doctrine\ORM\EntityManager;
 use App\Repository\MicroPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
