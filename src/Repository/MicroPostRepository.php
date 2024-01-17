@@ -21,6 +21,29 @@ class MicroPostRepository extends ServiceEntityRepository
         parent::__construct($registry, MicroPost::class);
     }
 
+    public function findAllWithComments(): array
+    {
+        // Symfony 6
+        return $this->createQueryBuilder('p')
+            ->addSelect('c')
+            ->leftJoin('p.ccomments', 'c') // To fetch only posts that have comments, use `innerJoin()`
+            ->orderBy('p.created', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        // Same query in Symfony 7
+        // $qb = $this->createQueryBuilder('p')
+        //     ->addSelect('c')
+        //     ->leftJoin('p.ccomments', 'c')
+        //     ->orderBy('p.created', 'DESC')
+        // ;
+
+        // $query = $qb->getQuery();
+
+        // return $query->execute();
+    }
+
+
 //    /**
 //     * @return MicroPost[] Returns an array of MicroPost objects
 //     */
