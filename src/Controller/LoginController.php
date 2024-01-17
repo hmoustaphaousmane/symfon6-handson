@@ -22,4 +22,10 @@ class LoginController extends AbstractController
             'error' => $error
         ]);
     }
+
+    #[Route('/logout', name: 'app_logout')]
+    public function logout()
+    {
+        // There is nothing to here, Symfony handles the logout process
+    }
 }
