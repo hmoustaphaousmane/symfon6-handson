@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\Comment;
 use App\Entity\MicroPost;
 use App\Form\CommentType;
@@ -52,7 +51,6 @@ class MicroPostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $micropost = $form->getData();
-            $micropost->setCreated(new DateTime());
             $micropost->setAuthor($this->getUser());
 
             // Tell Doctrine to eventually save the post - no queries yet
