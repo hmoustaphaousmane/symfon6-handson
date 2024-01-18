@@ -21,10 +21,17 @@
         </div>
         {# {{ form_row(registrationForm.email, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md borde p-2 mt-1 mb-2' }}) }} #}
 
-        <div>
-            {{ form_label(registrationForm.plainPassword, 'Password', {'label_attr': { 'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium' }}) }}
-            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md borde p-2 mt-1 mb-2' }}) }}
-            {{ form_errors(registrationForm.plainPassword) }}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                {{ form_label(registrationForm.plainPassword.first, 'Password', {'label_attr': { 'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium' }}) }}
+                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md borde p-2 mt-1 mb-2' }}) }}
+                {{ form_errors(registrationForm.plainPassword.first) }}
+            </div>
+            <div>
+                {{ form_label(registrationForm.plainPassword.second, 'Repeated Password', {'label_attr': { 'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium' }}) }}
+                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md borde p-2 mt-1 mb-2' }}) }}
+                {{ form_errors(registrationForm.plainPassword.second) }}
+            </div>
         </div>
         {# {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md borde p-2 mt-1 mb-2' }}, {
             label: 'Password'
