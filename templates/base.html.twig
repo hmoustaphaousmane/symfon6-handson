@@ -33,7 +33,7 @@
                 {# {% if app.user %} #} {# is equivalent to 👇🏾 #}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div>
-                        <a href="{{ path('app_micro_post_add') }}">New Post</a>
+                        <a href="{{ path('app_micro_post_add') }}">Add New Post</a>
                     </div>
                     <div>
                         <a href="{{ path('app_logout') }}">Logout</a>
@@ -47,16 +47,16 @@
                     </div>
                 {% endif %}
                 </div>
-            </div>    
+            </div>
         </div>
 
         <div class="w-full md:w-2/3 mx-auto">
-            {# Success flash messages #}
-            {% for message in app.flashes('success') %}
-                <div class="rounded-md p-2 border-green-300 bg-gredd-500 border dark:border-green-600 dark:bg-green-700 dark:text-white mb-4">{{ message }}</div>
-            {% endfor %}
-            <h1>Welcome to Symfony!</h1>
-            {% block body %}{% endblock %}
-        </div>
+        {# Success flash messages #}
+        {% for message in app.flashes('success') %}
+            <div class="rounded-md p-2 border-green-300 bg-green-50 border dark:border-green-600 dark:bg-green-700 dark:text-white mb-4">{{ message }}</div>
+        {% endfor %}
+
+        {% block body %}{% endblock %}
+        </div>   
     </body>
 </html>
