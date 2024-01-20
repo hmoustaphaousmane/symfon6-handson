@@ -23,7 +23,11 @@ class MicroPost
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min: 5, max:255, minMessage: 'Title is too short, 5 characters minimum')]
+    #[Assert\Length(
+        min: 5,
+        max:255,
+        minMessage: 'Title is too short, 5 characters minimum'
+    )]
     private string $title;
 
     #[ORM\Column(length: 500)]
@@ -34,7 +38,12 @@ class MicroPost
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private \DateTimeInterface $created;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true, cascade: ['persist'])]
+    #[ORM\OneToMany(
+        mappedBy: 'post',
+        targetEntity: Comment::class,
+        orphanRemoval: true,
+        
+    cascade: ['persist'])]
     private Collection $ccomments;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'liked')]

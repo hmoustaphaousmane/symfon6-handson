@@ -36,7 +36,10 @@ class MicroPostController extends AbstractController
 
     #[Route('micro-post/add', name: 'app_micro_post_add', priority: 2)]
     #[IsGranted('ROLE_WRITER')]
-    public function add(Request $request, EntityManagerInterface $entityManager) : Response
+    public function add(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ) : Response
     {
         // `denyAccessUnlessGranted()` method protect controller action from
         // unauthorised use. This does the samething as the pHp8 attirbute
@@ -74,7 +77,11 @@ class MicroPostController extends AbstractController
 
     #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
     #[IsGranted(MicroPost::EDIT, 'post')]
-    public function edit(MicroPost $post, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(
+        MicroPost $post,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(MicroPostType::class, $post);
         $form->handleRequest($request);
@@ -99,7 +106,11 @@ class MicroPostController extends AbstractController
 
     #[Route('/micro-post/{post}/comment', name: 'app_micro_post_comment')]
     #[IsGranted('ROLE_COMMENTER')]
-    public function addComment(MicroPost $post, Request $request, EntityManagerInterface $entityManager): Response
+    public function addComment(
+        MicroPost $post,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(CommentType::class, new Comment());
         $form->handleRequest($request);

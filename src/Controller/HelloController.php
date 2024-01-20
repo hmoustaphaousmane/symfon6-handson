@@ -27,7 +27,10 @@ class HelloController extends AbstractController // The AbstractController helps
     ];
 
     #[Route('/', name: 'app_index')] // Always give a `name` to the routes
-    public function index(EntityManagerInterface $entitymanger, MicroPostRepository $postRepository): Response
+    public function index(
+        EntityManagerInterface $entitymanger,
+        MicroPostRepository $postRepository
+    ): Response
     {
         // $user = new User();
         // $user->setEmail('hello@mail.com');
