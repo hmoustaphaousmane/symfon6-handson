@@ -8,6 +8,7 @@ use App\Entity\MicroPost;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @extends ServiceEntityRepository<MicroPost>
@@ -43,6 +44,24 @@ class MicroPostRepository extends ServiceEntityRepository
             ->setParameter(
                 'author',
                 $author instanceof User ? $author->getId() : $author
+            )
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllByAuthors(
+        Collection | array $authors
+    ) : array {
+        return $this->findAllQuery(
+            withComments: true,
+            withLikes: true,
+            withAuthors: true,
+            withProfiles: true
+        )->where('p.author in (:authors)')
+            ->setParameter(
+                'authors',
+                $authors
             )
             ->getQuery()
             ->getResult()
