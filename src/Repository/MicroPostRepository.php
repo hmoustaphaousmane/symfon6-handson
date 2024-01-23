@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\MicroPost;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,26 +24,41 @@ class MicroPostRepository extends ServiceEntityRepository
 
     public function findAllWithComments(): array
     {
-        // Symfony 6
-        return $this->createQueryBuilder('p')
-            ->addSelect('c')
-            ->leftJoin('p.ccomments', 'c') // To fetch only posts that have comments, use `innerJoin()`
-            ->orderBy('p.created', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-        // Same query in Symfony 7
-        // $qb = $this->createQueryBuilder('p')
-        //     ->addSelect('c')
-        //     ->leftJoin('p.ccomments', 'c')
-        //     ->orderBy('p.created', 'DESC')
-        // ;
-
-        // $query = $qb->getQuery();
-
-        // return $query->execute();
+        return $this->findAllQuery(
+            withComments: true
+        )->getQuery()->getResult();
     }
 
+    private function findAllQuery(
+        bool $withComments = false,
+        bool $withLikes = false,
+        bool $withAuthors = false,
+        bool $withProfiles = false,
+    ): QueryBuilder {
+        $query = $this->createQueryBuilder('p');
+
+        if ($withComments) {
+            $query->leftJoin('p.ccomments', 'c')
+                ->addSelect('c');
+        }
+
+        if ($withLikes) {
+            $query->leftJoin('p.likedBy', 'l')
+                ->addSelect('l');
+        }
+
+        if ($withAuthors || $withProfiles) {
+            $query->leftJoin('p.author', 'a')
+                ->addSelect('a');
+        }
+
+        if ($withProfiles) {
+            $query->leftJoin('a.userProfile', 'up')
+                ->addSelect('up');
+        }
+
+        return $query->orderBy('p.created', 'DESC');
+    }
 
 //    /**
 //     * @return MicroPost[] Returns an array of MicroPost objects
