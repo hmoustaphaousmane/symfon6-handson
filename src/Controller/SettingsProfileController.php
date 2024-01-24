@@ -93,7 +93,11 @@ class SettingsProfileController extends AbstractController
                 } catch (FileException $e) {
                 }
 
-                $profile = $user->getUserProfile() ?? new UserProfile();
+                $profile = $user->getUserProfile();
+                if (!$profile) {
+                    $profile =  new UserProfile();
+                    $user->setUserProfile($profile);
+                }
                 $profile->setImage($newFileName);
                 $entityManager->persist($user);
                 $entityManager->flush();
